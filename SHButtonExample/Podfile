@@ -3,6 +3,5 @@ use_frameworks!
 
 target 'SHButton_Example' do
   pod 'SHButton', :path => '../'
-  pod 'BFPaperButton'
 
 end

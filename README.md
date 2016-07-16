@@ -1,4 +1,4 @@
-# SHDatePicker
+# SHButton
 
 [![CI Status](http://img.shields.io/travis/@harushuu/SHButton.svg?style=flat)](https://travis-ci.org/@harushuu/SHButton)
 [![Version](https://img.shields.io/cocoapods/v/SHButton.svg?style=flat)](http://cocoapods.org/pods/SHButton)
@@ -10,14 +10,26 @@
 
 ## Installation
  
+With [CocoaPods](http://cocoapods.org/), add this line to your `Podfile`.
+
+```
+pod 'SHButton'
+```
+
+and run `pod install`, then you're all done!
+
+## How to use
+
+```objc
+    SHButton *button = [[SHButton alloc] init];
+```
 
 ## Summary
 
 A simple custom button inspired by iTunes for iOS 10.
  
-
+Will add more custom option in next version.
  
-
 ## Requirements
 
 * iOS 8.0+ 
