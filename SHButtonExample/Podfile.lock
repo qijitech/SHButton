@@ -1,0 +1,22 @@
+PODS:
+  - BFPaperButton (2.0.29):
+    - UIColor+BFPaperColors
+  - SHButton (0.1.0)
+  - UIColor+BFPaperColors (1.7.2)
+
+DEPENDENCIES:
+  - BFPaperButton
+  - SHButton (from `../`)
+
+EXTERNAL SOURCES:
+  SHButton:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  BFPaperButton: 7df738f2e749a9a4edd3e043f0621ee02215e417
+  SHButton: ab46243964523c40c031f95b210b2fba4a835699
+  UIColor+BFPaperColors: 03101fe6c10ed00c6daae7c26553f1de41500853
+
+PODFILE CHECKSUM: 9f1f62e319f767fb37083411569f46d8f49bb2f2
+
+COCOAPODS: 1.0.1
