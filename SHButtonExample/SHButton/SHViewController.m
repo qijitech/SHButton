@@ -8,7 +8,6 @@
 
 #import "SHViewController.h"
 #import <SHButton/SHButton.h>
-#import <BFPaperButton/BFPaperButton.h>
 
 @interface SHViewController ()
 @property (nonatomic, strong) SHButton *textButton;
