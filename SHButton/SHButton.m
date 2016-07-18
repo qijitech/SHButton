@@ -28,9 +28,20 @@
     return self;
 }
 
+- (instancetype)initWithFrame:(CGRect)frame {
+    if (self = [super initWithFrame:frame]) {
+        [self setup];
+    }
+    return self;
+}
+
 #pragma mark - Setup
 
 - (void)setup {
+    self.shadowColor = [UIColor colorWithRed:0.667 green:0.667 blue:0.667 alpha:0.6];
+    self.scaleValue = 0.9;
+    self.showAnimationDuration = 0.25;
+    self.cancelAnimationDuration = 0.4;
     self.adjustsImageWhenHighlighted = NO;
     self.layer.masksToBounds = NO;
     self.clipsToBounds = NO;
@@ -91,7 +102,7 @@
     CAShapeLayer *shadowCircel;
     if (!self.shadowCircel) {
         shadowCircel = [CAShapeLayer layer];
-        shadowCircel.fillColor = [UIColor colorWithRed:0.667 green:0.667 blue:0.667 alpha:0.6].CGColor;
+        shadowCircel.fillColor = self.shadowColor.CGColor;
         shadowCircel.strokeColor = [UIColor clearColor].CGColor;
         shadowCircel.borderColor = [UIColor clearColor].CGColor;
         shadowCircel.borderWidth = 0;
@@ -111,7 +122,7 @@
         shadowCircleAnimation = self.shadowCircleAnimation;
     }
 
-    shadowCircleAnimation.duration = 0.25;
+    shadowCircleAnimation.duration = self.showAnimationDuration;
     shadowCircleAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
     shadowCircleAnimation.fromValue = (__bridge id)startingCirclePath.CGPath;
     shadowCircleAnimation.toValue = (__bridge id)endingCirclePath.CGPath;
@@ -127,7 +138,7 @@
         shadowOpacityAnimation = self.shadowOpacityAnimation;
     }
     
-    shadowOpacityAnimation.duration = 0.25;
+    shadowOpacityAnimation.duration = self.showAnimationDuration;
     shadowOpacityAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
     shadowOpacityAnimation.fromValue = [NSNumber numberWithFloat:0.f];
     shadowOpacityAnimation.toValue = [NSNumber numberWithFloat:1.f];
@@ -153,14 +164,14 @@
     CABasicAnimation *shadowCircleAnimation = self.shadowCircleAnimation;
     CABasicAnimation *shadowOpacityAnimation = self.shadowOpacityAnimation;
 
-    shadowCircleAnimation.duration = 0.4;
+    shadowCircleAnimation.duration = self.cancelAnimationDuration;
     shadowCircleAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
     shadowCircleAnimation.fromValue = (__bridge id)startingCirclePath.CGPath;
     shadowCircleAnimation.toValue = (__bridge id)endingCirclePath.CGPath;
     shadowCircleAnimation.fillMode = kCAFillModeForwards;
     shadowCircleAnimation.removedOnCompletion = NO;
     
-    shadowOpacityAnimation.duration = 0.4;
+    shadowOpacityAnimation.duration = self.cancelAnimationDuration;
     shadowOpacityAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
     shadowOpacityAnimation.fromValue = [NSNumber numberWithFloat:1.f];
     shadowOpacityAnimation.toValue = [NSNumber numberWithFloat:0.f];
@@ -174,7 +185,7 @@
 - (void)showScaleAnimations {
     CABasicAnimation *scaleAnimation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
     scaleAnimation.duration = 0.08;
-    scaleAnimation.toValue = @0.9;
+    scaleAnimation.toValue = @(self.scaleValue);
     scaleAnimation.removedOnCompletion = NO;
     scaleAnimation.fillMode = kCAFillModeForwards;
     [self.layer addAnimation:scaleAnimation forKey:nil];
