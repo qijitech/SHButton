@@ -21,7 +21,7 @@ and run `pod install`, then you're all done!
 ## How to use
 
 ```objc
-    SHButton *button = [[SHButton alloc] init];
+SHButton *button = [[SHButton alloc] init];
 ```
 
 ## Summary
@@ -29,6 +29,23 @@ and run `pod install`, then you're all done!
 A simple custom button inspired by iTunes for iOS 10.
  
 Will add more custom option in next version.
+
+custom
+
+```objc
+// default shadowColor is lightGrayColor and alpha = 0.6;
+@property (nonatomic, strong) UIColor *shadowColor;
+
+// default scale is 0.9;
+@property (nonatomic, assign) CGFloat scaleValue;
+
+// default is 0.25;
+@property (nonatomic, assign) CGFloat showAnimationDuration;
+
+// default is 0.4;
+@property (nonatomic, assign) CGFloat cancelAnimationDuration;
+```
+
  
 ## Requirements
 
