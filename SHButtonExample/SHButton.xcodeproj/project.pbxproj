@@ -165,11 +165,6 @@
 				CLASSPREFIX = SH;
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "@harushuu";
-				TargetAttributes = {
-					6003F589195388D20070C39A = {
-						DevelopmentTeam = N46UL9D4Q6;
-					};
-				};
 			};
 			buildConfigurationList = 6003F585195388D10070C39A /* Build configuration list for PBXProject "SHButton" */;
 			compatibilityVersion = "Xcode 3.2";

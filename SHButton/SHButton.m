@@ -15,6 +15,7 @@
 @property (nonatomic, strong) CABasicAnimation *shadowOpacityAnimation;
 @property (nonatomic, strong) CABasicAnimation *shadowCircleAnimation;
 @property (nonatomic, strong) CAShapeLayer *shadowCircel;
+
 @end
 
 @implementation SHButton
@@ -74,17 +75,30 @@
 
 #pragma mark - UIGestureRecognizerDelegate
 
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    return NO;
+}
+
+#pragma mark - IBAction
+
 - (void)shouldTouch:(UITapGestureRecognizer *)tap {
+    self.showAnimation = YES;
     [self showScaleAnimations];
     [self showShadowAnimations];
 }
 
 - (void)didTouch:(UITapGestureRecognizer *)tap {
+    self.showAnimation = NO;
     [self cancelScaleAnimations];
     [self cancelShadowAnimations];
 }
 
 - (void)cancelTouch:(UITapGestureRecognizer *)tap {
+    if (!self.showAnimation) {
+        return;
+    } else {
+        self.showAnimation = NO;
+    }
     [self cancelScaleAnimations];
     [self cancelShadowAnimations];
 }

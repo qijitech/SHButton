@@ -62,8 +62,13 @@
         _imageButton.bounds = CGRectMake(0, 0, 120, 120);
         _imageButton.layer.cornerRadius = 60.f;
         _imageButton.center = CGPointMake(self.view.center.x, self.view.center.y + 80);
+        [_imageButton addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _imageButton;
+}
+
+- (void)buttonPressed:(SHButton *)button {
+    NSLog(@"%s",__func__);
 }
 
 @end
