@@ -52,10 +52,10 @@
     [self addTarget:self action:@selector(didTouch:) forControlEvents:UIControlEventTouchUpInside];
     [self addTarget:self action:@selector(didTouch:) forControlEvents:UIControlEventTouchUpOutside];
     [self addTarget:self action:@selector(cancelTouch:) forControlEvents:UIControlEventTouchCancel];
-    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:nil];
-    tapGestureRecognizer.delegate = self;
-    [self addGestureRecognizer:tapGestureRecognizer];
-    [UIView setAnimationDidStopSelector:@selector(animationDidStop:finished:)];
+//    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:nil];
+//    tapGestureRecognizer.delegate = self;
+//    [self addGestureRecognizer:tapGestureRecognizer];
+//    [UIView setAnimationDidStopSelector:@selector(animationDidStop:finished:)];
 }
 
 #pragma mark - Super Overrides
@@ -124,11 +124,11 @@
 
 #pragma mark - Animation
 
-- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
-    if ([[anim valueForKey:@"id"] isEqualToString:@"shadowOpacityAnimation"]) {
-        [self.layer removeAllAnimations];
-    }
-}
+//- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
+//    if ([[anim valueForKey:@"id"] isEqualToString:@"shadowOpacityAnimation"]) {
+//        [self.layer removeAllAnimations];
+//    }
+//}
 
 - (void)showShadowAnimations {
     CGFloat startingCornerRadius = self.bigShadowRect.size.width > self.bigShadowRect.size.height ? : self.bigShadowRect.size.height;
