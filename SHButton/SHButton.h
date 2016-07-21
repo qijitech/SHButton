@@ -22,4 +22,11 @@
 // default is 0.4;
 @property (nonatomic, assign) CGFloat cancelAnimationDuration;
 
+// default is 1.3;
+@property (nonatomic, assign) CGFloat minShadowCircleValue;
+
+// default is 1.5;
+@property (nonatomic, assign) CGFloat maxShadowCircleValue;
+
+
 @end

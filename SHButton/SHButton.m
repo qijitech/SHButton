@@ -12,8 +12,6 @@
 @property (nonatomic, assign) CGRect bigShadowRect;
 @property (nonatomic, assign) CGRect smallShadowRect;
 @property (nonatomic, assign) BOOL showAnimation;
-@property (nonatomic, strong) CABasicAnimation *shadowOpacityAnimation;
-@property (nonatomic, strong) CABasicAnimation *shadowCircleAnimation;
 @property (nonatomic, strong) CAShapeLayer *shadowCircel;
 
 @end
@@ -43,6 +41,8 @@
     self.scaleValue = 0.9;
     self.showAnimationDuration = 0.25;
     self.cancelAnimationDuration = 0.4;
+    self.minShadowCircleValue = 1.3;
+    self.maxShadowCircleValue = 1.5;
     self.adjustsImageWhenHighlighted = NO;
     self.layer.masksToBounds = NO;
     self.clipsToBounds = NO;
@@ -55,22 +55,41 @@
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:nil];
     tapGestureRecognizer.delegate = self;
     [self addGestureRecognizer:tapGestureRecognizer];
+    [UIView setAnimationDidStopSelector:@selector(animationDidStop:finished:)];
 }
 
 #pragma mark - Super Overrides
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.bigShadowRect = CGRectMake(self.bounds.origin.x - self.bounds.size.width * 0.25,
-                                    self.bounds.origin.y - self.bounds.size.height * 0.25,
-                                    self.bounds.size.width * 1.5,
-                                    self.bounds.size.height * 1.5);
-    self.smallShadowRect = CGRectMake(self.bounds.origin.x - self.bounds.size.width * 0.15,
-                                      self.bounds.origin.y - self.bounds.size.height * 0.15,
-                                      self.bounds.size.width * 1.3,
-                                      self.bounds.size.height * 1.3);
+    self.bigShadowRect = CGRectMake(self.bounds.origin.x - self.bounds.size.width * (self.maxShadowCircleValue - 1) * 0.5,
+                                    self.bounds.origin.y - self.bounds.size.height * (self.maxShadowCircleValue - 1) * 0.5,
+                                    self.bounds.size.width * self.maxShadowCircleValue,
+                                    self.bounds.size.height * self.maxShadowCircleValue);
+    self.smallShadowRect = CGRectMake(self.bounds.origin.x - self.bounds.size.width * (self.minShadowCircleValue - 1) * 0.5,
+                                      self.bounds.origin.y - self.bounds.size.height * (self.minShadowCircleValue - 1) * 0.5,
+                                      self.bounds.size.width * self.minShadowCircleValue,
+                                      self.bounds.size.height * self.minShadowCircleValue);
     [self setNeedsDisplay];
     [self.layer setNeedsDisplay];
+}
+
+#pragma mark - Setup Custom Property
+
+- (void)setMinShadowCircleValue:(CGFloat)minShadowCircleValue {
+    _minShadowCircleValue = minShadowCircleValue;
+    self.smallShadowRect = CGRectMake(self.bounds.origin.x - self.bounds.size.width * (self.minShadowCircleValue - 1) * 0.5,
+                                      self.bounds.origin.y - self.bounds.size.height * (self.minShadowCircleValue - 1) * 0.5,
+                                      self.bounds.size.width * self.minShadowCircleValue,
+                                      self.bounds.size.height * self.minShadowCircleValue);
+}
+
+- (void)setMaxShadowCircleValue:(CGFloat)maxShadowCircleValue {
+    _maxShadowCircleValue = maxShadowCircleValue;
+    self.bigShadowRect = CGRectMake(self.bounds.origin.x - self.bounds.size.width * (self.maxShadowCircleValue - 1) * 0.5,
+                                    self.bounds.origin.y - self.bounds.size.height * (self.maxShadowCircleValue - 1) * 0.5,
+                                    self.bounds.size.width * self.maxShadowCircleValue,
+                                    self.bounds.size.height * self.maxShadowCircleValue);
 }
 
 #pragma mark - UIGestureRecognizerDelegate
@@ -105,6 +124,12 @@
 
 #pragma mark - Animation
 
+- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
+    if ([[anim valueForKey:@"id"] isEqualToString:@"shadowOpacityAnimation"]) {
+        [self.layer removeAllAnimations];
+    }
+}
+
 - (void)showShadowAnimations {
     CGFloat startingCornerRadius = self.bigShadowRect.size.width > self.bigShadowRect.size.height ? : self.bigShadowRect.size.height;
     UIView *startingRectSizerView = [[UIView alloc] initWithFrame:self.bigShadowRect];
@@ -127,31 +152,15 @@
         shadowCircel = self.shadowCircel;
     }
     
-    
-    CABasicAnimation *shadowCircleAnimation;
-    if (!self.shadowCircleAnimation) {
-        CABasicAnimation *shadowCircleAnimation = [CABasicAnimation animationWithKeyPath:@"path"];
-        self.shadowCircleAnimation = shadowCircleAnimation;
-    } else {
-        shadowCircleAnimation = self.shadowCircleAnimation;
-    }
-
+    CABasicAnimation *shadowCircleAnimation = [CABasicAnimation animationWithKeyPath:@"path"];
     shadowCircleAnimation.duration = self.showAnimationDuration;
     shadowCircleAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
     shadowCircleAnimation.fromValue = (__bridge id)startingCirclePath.CGPath;
     shadowCircleAnimation.toValue = (__bridge id)endingCirclePath.CGPath;
     shadowCircleAnimation.fillMode = kCAFillModeForwards;
     shadowCircleAnimation.removedOnCompletion = NO;
-
     
-    CABasicAnimation *shadowOpacityAnimation;
-    if (!self.shadowOpacityAnimation) {
-        CABasicAnimation *shadowOpacityAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
-        self.shadowOpacityAnimation = shadowOpacityAnimation;
-    } else {
-        shadowOpacityAnimation = self.shadowOpacityAnimation;
-    }
-    
+    CABasicAnimation *shadowOpacityAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
     shadowOpacityAnimation.duration = self.showAnimationDuration;
     shadowOpacityAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
     shadowOpacityAnimation.fromValue = [NSNumber numberWithFloat:0.f];
@@ -161,8 +170,6 @@
     
     [shadowCircel addAnimation:shadowCircleAnimation forKey:@"animatePath"];
     [shadowCircel addAnimation:shadowOpacityAnimation forKey:@"opacityAnimation"];
-    
-    
 }
 
 - (void)cancelShadowAnimations {
@@ -175,9 +182,7 @@
     UIBezierPath *endingCirclePath = [UIBezierPath bezierPathWithRoundedRect:endingRectSizerView.frame cornerRadius:endingCornerRadius];
     
     CAShapeLayer *shadowCircel = self.shadowCircel;
-    CABasicAnimation *shadowCircleAnimation = self.shadowCircleAnimation;
-    CABasicAnimation *shadowOpacityAnimation = self.shadowOpacityAnimation;
-
+    CABasicAnimation *shadowCircleAnimation = [CABasicAnimation animationWithKeyPath:@"path"];
     shadowCircleAnimation.duration = self.cancelAnimationDuration;
     shadowCircleAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
     shadowCircleAnimation.fromValue = (__bridge id)startingCirclePath.CGPath;
@@ -185,6 +190,9 @@
     shadowCircleAnimation.fillMode = kCAFillModeForwards;
     shadowCircleAnimation.removedOnCompletion = NO;
     
+    CABasicAnimation *shadowOpacityAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
+    [shadowOpacityAnimation setValue:@"shadowOpacityAnimation" forKey:@"id"];
+    shadowOpacityAnimation.delegate = self;
     shadowOpacityAnimation.duration = self.cancelAnimationDuration;
     shadowOpacityAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
     shadowOpacityAnimation.fromValue = [NSNumber numberWithFloat:1.f];

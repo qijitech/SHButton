@@ -38,6 +38,8 @@
         [_textButton setTitle:@"SHButton" forState:UIControlStateNormal];
         _textButton.bounds = CGRectMake(0, 0, 100, 40);
         _textButton.center = CGPointMake(self.view.center.x, self.view.center.y - 120);
+        _textButton.minShadowCircleValue = 1.5;
+        _textButton.maxShadowCircleValue = 2.f;
     }
     return _textButton;
 }
