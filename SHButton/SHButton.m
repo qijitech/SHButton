@@ -1,12 +1,35 @@
 //
 //  SHButton.m
-//  Pods
+//  SHButton
 //
 //  Created by shuu on 7/16/16.
+//  Copyright (c) 2016 @harushuu. All rights reserved.
 //
+// The MIT License (MIT)
 //
+// Copyright (c) 2016 @harushuu
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy of
+// this software and associated documentation files (the "Software"), to deal in
+// the Software without restriction, including without limitation the rights to
+// use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+// the Software, and to permit persons to whom the Software is furnished to do so,
+// subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+// FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+// COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+// IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+// CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 
 #import "SHButton.h"
+
+static UIColor *kDefaultShadowColor;
 
 @interface SHButton () <UIGestureRecognizerDelegate>
 @property (nonatomic, assign) CGRect bigShadowRect;
@@ -19,6 +42,10 @@
 @implementation SHButton
 
 #pragma mark - Initializers
+
++ (void)initialize {
+    kDefaultShadowColor = [UIColor colorWithRed:0.667 green:0.667 blue:0.667 alpha:0.6];
+}
 
 - (instancetype)init {
     if (self = [super init]) {
@@ -37,12 +64,13 @@
 #pragma mark - Setup
 
 - (void)setup {
-    self.shadowColor = [UIColor colorWithRed:0.667 green:0.667 blue:0.667 alpha:0.6];
+    self.smartColor = YES;
     self.scaleValue = 0.9;
     self.showAnimationDuration = 0.25;
     self.cancelAnimationDuration = 0.4;
     self.minShadowCircleValue = 1.3;
     self.maxShadowCircleValue = 1.5;
+    self.shadowColorAlpha = 0.6;
     self.adjustsImageWhenHighlighted = NO;
     self.layer.masksToBounds = NO;
     self.clipsToBounds = NO;
@@ -52,10 +80,6 @@
     [self addTarget:self action:@selector(didTouch:) forControlEvents:UIControlEventTouchUpInside];
     [self addTarget:self action:@selector(didTouch:) forControlEvents:UIControlEventTouchUpOutside];
     [self addTarget:self action:@selector(cancelTouch:) forControlEvents:UIControlEventTouchCancel];
-//    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:nil];
-//    tapGestureRecognizer.delegate = self;
-//    [self addGestureRecognizer:tapGestureRecognizer];
-//    [UIView setAnimationDidStopSelector:@selector(animationDidStop:finished:)];
 }
 
 #pragma mark - Super Overrides
@@ -124,11 +148,33 @@
 
 #pragma mark - Animation
 
-//- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
-//    if ([[anim valueForKey:@"id"] isEqualToString:@"shadowOpacityAnimation"]) {
-//        [self.layer removeAllAnimations];
-//    }
-//}
+- (UIColor *)calculateCurrentShadowColor {
+    if (!self.smartColor) {
+        if (self.shadowColor) {
+            return [self.shadowColor colorWithAlphaComponent:self.shadowColorAlpha];
+        } else {
+            return kDefaultShadowColor;
+        }
+    } else {
+        if (self.backgroundColor == [UIColor clearColor] || !self.backgroundColor) {
+            if (self.currentTitle.length) {
+                if (!self.currentTitleColor || self.currentTitleColor == [UIColor clearColor] || self.currentTitleColor == [UIColor whiteColor]) {
+                    return kDefaultShadowColor;
+                } else {
+                    return [self.currentTitleColor colorWithAlphaComponent:self.shadowColorAlpha * 0.5];
+                }
+            } else {
+                return kDefaultShadowColor;
+            }
+        } else {
+            if (self.shadowColor) {
+                return [self.shadowColor colorWithAlphaComponent:self.shadowColorAlpha];
+            } else {
+                return [self.backgroundColor colorWithAlphaComponent:self.shadowColorAlpha];
+            }
+        }
+    }
+}
 
 - (void)showShadowAnimations {
     CGFloat startingCornerRadius = self.bigShadowRect.size.width > self.bigShadowRect.size.height ? : self.bigShadowRect.size.height;
@@ -141,7 +187,7 @@
     CAShapeLayer *shadowCircel;
     if (!self.shadowCircel) {
         shadowCircel = [CAShapeLayer layer];
-        shadowCircel.fillColor = self.shadowColor.CGColor;
+        shadowCircel.fillColor = [self calculateCurrentShadowColor].CGColor;
         shadowCircel.strokeColor = [UIColor clearColor].CGColor;
         shadowCircel.borderColor = [UIColor clearColor].CGColor;
         shadowCircel.borderWidth = 0;

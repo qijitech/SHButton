@@ -1,5 +1,5 @@
 PODS:
-  - SHButton (0.1.0)
+  - SHButton (0.1.5)
 
 DEPENDENCIES:
   - SHButton (from `../`)
@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  SHButton: ab46243964523c40c031f95b210b2fba4a835699
+  SHButton: 1ad74f6e8cf9ace4dd2c34699af0562767705bbe
 
 PODFILE CHECKSUM: 7ec3fa705b5d46f4ffb3c57b76357aaab74604e3
 

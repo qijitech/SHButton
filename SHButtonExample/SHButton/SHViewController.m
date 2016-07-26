@@ -34,12 +34,10 @@
 - (SHButton *)textButton {
     if (!_textButton) {
         _textButton = [[SHButton alloc] init];
-        [_textButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [_textButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
         [_textButton setTitle:@"SHButton" forState:UIControlStateNormal];
         _textButton.bounds = CGRectMake(0, 0, 100, 40);
         _textButton.center = CGPointMake(self.view.center.x, self.view.center.y - 120);
-        _textButton.minShadowCircleValue = 1.5;
-        _textButton.maxShadowCircleValue = 2.f;
     }
     return _textButton;
 }
@@ -53,6 +51,8 @@
         _roundButton.bounds = CGRectMake(0, 0, 60, 60);
         _roundButton.center = CGPointMake(self.view.center.x, self.view.center.y - 40);
         _roundButton.layer.cornerRadius = 30.f;
+        _roundButton.minShadowCircleValue = 1.5;
+        _roundButton.maxShadowCircleValue = 2.f;
     }
     return _roundButton;
 }

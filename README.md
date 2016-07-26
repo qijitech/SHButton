@@ -30,11 +30,21 @@ A simple custom button inspired by iTunes for iOS 10.
  
 Will add more custom option in next version.
 
+Smart color will auto set shadow color compare with your background color or title color.
+
+Enjoy yourself.
+
 custom
 
 ```objc
-// default shadowColor is lightGrayColor and alpha = 0.6;
+// default is YES; If NO, default shadowColor is lightGrayColor with alpha = 0.6;
+@property (nonatomic, assign) BOOL smartColor;
+
+// If smartColor is NO, default shadowColor is lightGrayColor with alpha = 0.6;
 @property (nonatomic, strong) UIColor *shadowColor;
+
+// default scale is 0.6;
+@property (nonatomic, assign) CGFloat shadowColorAlpha;
 
 // default scale is 0.9;
 @property (nonatomic, assign) CGFloat scaleValue;
