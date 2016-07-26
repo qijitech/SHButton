@@ -72,8 +72,8 @@ static UIColor *kDefaultShadowColor;
     self.maxShadowCircleValue = 1.5;
     self.shadowColorAlpha = 0.6;
     self.adjustsImageWhenHighlighted = NO;
-    self.layer.masksToBounds = NO;
     self.clipsToBounds = NO;
+    self.layer.masksToBounds = NO;
     [self.layer setNeedsDisplayOnBoundsChange:YES];
     [self setContentMode:UIViewContentModeRedraw];
     [self addTarget:self action:@selector(shouldTouch:) forControlEvents:UIControlEventTouchDown];
@@ -149,6 +149,9 @@ static UIColor *kDefaultShadowColor;
 #pragma mark - Animation
 
 - (UIColor *)calculateCurrentShadowColor {
+    if (self.shadowColor == [UIColor clearColor]) {
+        return [UIColor clearColor];
+    }
     if (!self.smartColor) {
         if (self.shadowColor) {
             return [self.shadowColor colorWithAlphaComponent:self.shadowColorAlpha];
