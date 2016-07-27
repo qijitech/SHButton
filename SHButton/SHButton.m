@@ -149,34 +149,19 @@ static UIColor *kDefaultShadowColor;
 #pragma mark - Animation
 
 - (UIColor *)calculateCurrentShadowColor {
-    if (self.shadowColor == [UIColor clearColor]) {
-        return [UIColor clearColor];
+    if (self.shadowColor) {
+        return [self.shadowColor colorWithAlphaComponent:self.shadowColorAlpha];
     }
     if (!self.smartColor) {
-        if (self.shadowColor) {
-            return [self.shadowColor colorWithAlphaComponent:self.shadowColorAlpha];
-        } else {
-            return kDefaultShadowColor;
-        }
-    } else {
-        if (self.backgroundColor == [UIColor clearColor] || !self.backgroundColor) {
-            if (self.currentTitle.length) {
-                if (!self.currentTitleColor || self.currentTitleColor == [UIColor clearColor] || self.currentTitleColor == [UIColor whiteColor]) {
-                    return kDefaultShadowColor;
-                } else {
-                    return [self.currentTitleColor colorWithAlphaComponent:self.shadowColorAlpha * 0.5];
-                }
-            } else {
-                return kDefaultShadowColor;
-            }
-        } else {
-            if (self.shadowColor) {
-                return [self.shadowColor colorWithAlphaComponent:self.shadowColorAlpha];
-            } else {
-                return [self.backgroundColor colorWithAlphaComponent:self.shadowColorAlpha];
-            }
-        }
+        return kDefaultShadowColor;
     }
+    if (self.backgroundColor) {
+        return [self.backgroundColor colorWithAlphaComponent:self.shadowColorAlpha];
+    }
+    if (self.currentTitleColor && self.currentTitleColor != [UIColor clearColor] && self.currentTitleColor != [UIColor whiteColor] && self.currentTitle.length) {
+        return [self.currentTitleColor colorWithAlphaComponent:self.shadowColorAlpha * 0.5];
+    }
+    return kDefaultShadowColor;
 }
 
 - (void)showShadowAnimations {
