@@ -8,13 +8,13 @@
 
 Pod::Spec.new do |s|
 s.name             = 'SHButton'
-s.version          = '0.1.7'
+s.version          = '0.1.8'
 s.summary          = 'A simple custom button inspired by iTunes for iOS 10.'
 s.homepage         = 'https://github.com/harushuu/SHButton'
 s.screenshots      = 'https://github.com/harushuu/SHButton/raw/master/Screenshots.gif'
 s.license          = { :type => 'MIT', :file => 'LICENSE' }
 s.author           = { '@harushuu' => 'hunter4n@gmail.com' }
-s.source           = { :git => 'https://github.com/harushuu/SHButton.git', :tag => '0.1.7' }
+s.source           = { :git => 'https://github.com/harushuu/SHButton.git', :tag => '0.1.8' }
 s.platform     = :ios, '8.0'
 s.requires_arc = true
 s.source_files = 'SHButton/*'

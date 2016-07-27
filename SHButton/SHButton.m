@@ -65,6 +65,7 @@ static UIColor *kDefaultShadowColor;
 
 - (void)setup {
     self.smartColor = YES;
+    self.showShadowAnimation = YES;
     self.scaleValue = 0.9;
     self.showAnimationDuration = 0.25;
     self.cancelAnimationDuration = 0.4;
@@ -127,28 +128,36 @@ static UIColor *kDefaultShadowColor;
 - (void)shouldTouch:(UITapGestureRecognizer *)tap {
     self.showAnimation = YES;
     [self showScaleAnimations];
-    [self showShadowAnimations];
+    if (self.showShadowAnimation) {
+        [self showShadowAnimations];
+    }
 }
 
 - (void)didTouch:(UITapGestureRecognizer *)tap {
     self.showAnimation = NO;
     [self cancelScaleAnimations];
-    [self cancelShadowAnimations];
+    if (self.showShadowAnimation) {
+        [self cancelShadowAnimations];
+    }
 }
 
 - (void)cancelTouch:(UITapGestureRecognizer *)tap {
     if (!self.showAnimation) {
         return;
-    } else {
-        self.showAnimation = NO;
     }
+    self.showAnimation = NO;
     [self cancelScaleAnimations];
-    [self cancelShadowAnimations];
+    if (self.showShadowAnimation) {
+        [self cancelShadowAnimations];
+    }
 }
 
 #pragma mark - Animation
 
 - (UIColor *)calculateCurrentShadowColor {
+    if (self.shadowColor == [UIColor clearColor]) {
+        return [UIColor clearColor];
+    }
     if (self.shadowColor) {
         return [self.shadowColor colorWithAlphaComponent:self.shadowColorAlpha];
     }
