@@ -40,6 +40,9 @@ custom
 // default is YES; If NO, default shadowColor is lightGrayColor with alpha = 0.6;
 @property (nonatomic, assign) BOOL smartColor;
 
+// default scale is YES;
+@property (nonatomic, assign) BOOL showShadowAnimation;
+
 // If smartColor is NO, default shadowColor is lightGrayColor with alpha = 0.6;
 @property (nonatomic, strong) UIColor *shadowColor;
 
