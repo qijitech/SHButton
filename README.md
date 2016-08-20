@@ -13,7 +13,7 @@
 With [CocoaPods](http://cocoapods.org/), add this line to your `Podfile`.
 
 ```
-pod 'SHButton'
+pod 'SHButton', '~> 0.1.8'
 ```
 
 and run `pod install`, then you're all done!
@@ -32,9 +32,9 @@ Will add more custom option in next version.
 
 Smart color will auto set shadow color compare with your background color or title color.
 
-Enjoy yourself.
+Enjoy yourself!
 
-custom
+###custom
 
 ```objc
 // default is YES; If NO, default shadowColor is lightGrayColor with alpha = 0.6;

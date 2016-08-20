@@ -14,7 +14,7 @@ s.homepage         = 'https://github.com/harushuu/SHButton'
 s.screenshots      = 'https://github.com/harushuu/SHButton/raw/master/Screenshots.gif'
 s.license          = { :type => 'MIT', :file => 'LICENSE' }
 s.author           = { '@harushuu' => 'hunter4n@gmail.com' }
-s.source           = { :git => 'https://github.com/harushuu/SHButton.git', :tag => '0.1.8' }
+s.source           = { :git => 'https://github.com/harushuu/SHButton.git', :tag => s.version }
 s.platform     = :ios, '8.0'
 s.requires_arc = true
 s.source_files = 'SHButton/*'
