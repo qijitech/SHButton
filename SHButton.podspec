@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
 s.name             = 'SHButton'
-s.version          = '0.1.8'
+s.version          = '0.1.9'
 s.summary          = 'A simple custom button inspired by iTunes for iOS 10.'
 s.homepage         = 'https://github.com/harushuu/SHButton'
 s.screenshots      = 'https://github.com/harushuu/SHButton/raw/master/Screenshots.gif'

@@ -13,7 +13,7 @@
 With [CocoaPods](http://cocoapods.org/), add this line to your `Podfile`.
 
 ```
-pod 'SHButton', '~> 0.1.8'
+pod 'SHButton', '~> 0.1.9'
 ```
 
 and run `pod install`, then you're all done!
@@ -42,6 +42,9 @@ Enjoy yourself!
 
 // default scale is YES;
 @property (nonatomic, assign) BOOL showShadowAnimation;
+
+// If set YES, minShadowCircleValue = 1.1f && maxShadowCircleValue = 1.1f;
+@property (nonatomic, assign, getter=isOriginScale) BOOL originScale;
 
 // If smartColor is NO, default shadowColor is lightGrayColor with alpha = 0.6;
 @property (nonatomic, strong) UIColor *shadowColor;

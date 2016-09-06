@@ -13,7 +13,7 @@
 @property (nonatomic, strong) SHButton *textButton;
 @property (nonatomic, strong) SHButton *roundButton;
 @property (nonatomic, strong) SHButton *imageButton;
-
+@property (nonatomic, strong) SHButton *originButton;
 
 @end
 
@@ -29,6 +29,20 @@
     [self.view addSubview:self.textButton];
     [self.view addSubview:self.roundButton];
     [self.view addSubview:self.imageButton];
+    [self.view addSubview:self.originButton];
+}
+
+- (SHButton *)originButton {
+    if (!_originButton) {
+        _originButton = [[SHButton alloc] init];
+        [_originButton setTitle:@"SHButton" forState:UIControlStateNormal];
+        _originButton.backgroundColor = [UIColor lightGrayColor];
+        _originButton.originScale = YES;
+        _originButton.showShadowAnimation = NO;
+        _originButton.bounds = CGRectMake(0, 0, 100, 40);
+        _originButton.center = CGPointMake(self.view.center.x, self.view.center.y - 180);
+    }
+    return _originButton;
 }
 
 - (SHButton *)textButton {

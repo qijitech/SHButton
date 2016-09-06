@@ -117,6 +117,13 @@ static UIColor *kDefaultShadowColor;
                                     self.bounds.size.height * self.maxShadowCircleValue);
 }
 
+- (void)setOriginScale:(BOOL)originScale {
+    _originScale = originScale;
+    self.minShadowCircleValue = 1.1f;
+    self.maxShadowCircleValue = 1.1f;
+}
+
+
 #pragma mark - UIGestureRecognizerDelegate
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
