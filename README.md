@@ -13,7 +13,7 @@
 With [CocoaPods](http://cocoapods.org/), add this line to your `Podfile`.
 
 ```
-pod 'SHButton', '~> 0.1.9'
+pod 'SHButton', '~> 0.2.0'
 ```
 
 and run `pod install`, then you're all done!
