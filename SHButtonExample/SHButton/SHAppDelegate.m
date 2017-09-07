@@ -16,7 +16,9 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
-    self.window.rootViewController = [[SHViewController alloc] init];
+    UINavigationController *root = [[UINavigationController alloc] initWithRootViewController:[[UIViewController alloc] init]];
+    self.window.rootViewController = root;
+    [root pushViewController:[[SHViewController alloc] init] animated:YES];
     return YES;
 }
 

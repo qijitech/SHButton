@@ -31,7 +31,7 @@
 
 static UIColor *kDefaultShadowColor;
 
-@interface SHButton () <UIGestureRecognizerDelegate>
+@interface SHButton () <UIGestureRecognizerDelegate, CAAnimationDelegate>
 @property (nonatomic, assign) CGRect bigShadowRect;
 @property (nonatomic, assign) CGRect smallShadowRect;
 @property (nonatomic, assign) BOOL showAnimation;
@@ -199,6 +199,7 @@ static UIColor *kDefaultShadowColor;
         [self.layer insertSublayer:shadowCircel atIndex:0];
         self.shadowCircel = shadowCircel;
     } else {
+        self.shadowCircel.hidden = NO;
         shadowCircel = self.shadowCircel;
     }
     
@@ -233,6 +234,7 @@ static UIColor *kDefaultShadowColor;
     
     CAShapeLayer *shadowCircel = self.shadowCircel;
     CABasicAnimation *shadowCircleAnimation = [CABasicAnimation animationWithKeyPath:@"path"];
+    shadowCircleAnimation.delegate = self;
     shadowCircleAnimation.duration = self.cancelAnimationDuration;
     shadowCircleAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
     shadowCircleAnimation.fromValue = (__bridge id)startingCirclePath.CGPath;
@@ -241,7 +243,6 @@ static UIColor *kDefaultShadowColor;
     shadowCircleAnimation.removedOnCompletion = NO;
     
     CABasicAnimation *shadowOpacityAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
-    [shadowOpacityAnimation setValue:@"shadowOpacityAnimation" forKey:@"id"];
     shadowOpacityAnimation.delegate = self;
     shadowOpacityAnimation.duration = self.cancelAnimationDuration;
     shadowOpacityAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
@@ -271,5 +272,12 @@ static UIColor *kDefaultShadowColor;
     scaleAnimation.fillMode = kCAFillModeForwards;
     [self.layer addAnimation:scaleAnimation forKey:nil];
 }
+
+#pragma mark - CAAnimationDelegate
+
+- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
+    self.shadowCircel.hidden = YES;
+}
+
 
 @end
