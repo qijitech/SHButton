@@ -5,6 +5,8 @@
 [![License](https://img.shields.io/cocoapods/l/SHButton.svg?style=flat)](http://cocoapods.org/pods/SHButton)
 [![Platform](https://img.shields.io/cocoapods/p/SHButton.svg?style=flat)](http://cocoapods.org/pods/SHButton)
 
+However if you're using Swift in your project, I recommend using [PBButton](https://github.com/peppababy7/PBButton) as it provides better type safety with a simpler API.
+
 ## Screenshots
 ![image](https://github.com/harushuu/SHButton/raw/master/Screenshots.gif)
 
